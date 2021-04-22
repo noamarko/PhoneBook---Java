@@ -29,7 +29,6 @@ public class Owner extends Manager {
 	public static Owner setOwner(Scanner scn) throws BonusException {
 		Manager o = setManager(scn);
 		o = new Owner(o.getName(), o.getSalary(), o.getBonus());
-		scn.nextLine();
 		return (Owner)o;
 
 	}

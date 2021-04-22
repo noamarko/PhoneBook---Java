@@ -25,13 +25,20 @@ public class Hamburger extends Product{
 	
 	public static Product setHamburger(Scanner scn) throws PriceException {
 		double price = 0;
-		System.out.print("Please enter name: ");
-		String name = scn.next();
+		int token;
+		String name;
+		scn.nextLine();
+		while(true) {
+			System.out.println("\nPlease enter the name: ");
+			name = scn.nextLine();
+			System.out.println("\nIs this the correct name?(1 - Y/ 0 - N)");
+			token = scn.nextInt();
+			if(token == 1)
+				break;
+		}
 		System.out.print("Please enter price: ");
 		if (scn.hasNextDouble()) {
 			price = scn.nextDouble();
-			if(price<0)
-				throw new PriceException("Illegal price input exception!");
 		}
 		else {
 			throw new PriceException("Illegal price input exception!");
@@ -41,7 +48,7 @@ public class Hamburger extends Product{
 		System.out.print("Please enter Degree of Doneness(RARE|MEDIUM|MEDIUMWELL|WELLDONE): ");
 		String howMuch = scn.next();
 		Product h = new Hamburger(howMuch, name, price, whatElse);
-		System.out.println("Hamburger created successfully!");
+		System.out.println("\nHamburger created successfully!");
 		return h;
 	}
 }

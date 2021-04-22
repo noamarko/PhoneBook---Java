@@ -92,11 +92,11 @@ public class GenericMenu<T extends Product> implements MenuFunction<T> {
 		double smallestAmount;
 		while (start <= end) {
 			middle = (start + end) / 2;
-			if (name.compareTo(menu.get(middle).getPrdctName()) == 0) {
+			if (menu.get(middle).getPrdctName().compareTo(name) == 0) {
 				if (price.doubleValue() == menu.get(middle).getPrdctPrice().doubleValue()) {
 					return middle;
 				} else
-					while (name.compareTo(menu.get(middle).getPrdctName()) == 0) {
+					while (menu.get(middle).getPrdctName().compareTo(name) == 0) {
 						if (price.doubleValue() == menu.get(middle).getPrdctPrice().doubleValue())
 							return middle;
 						else

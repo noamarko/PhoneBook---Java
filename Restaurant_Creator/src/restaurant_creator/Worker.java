@@ -42,6 +42,10 @@ public class Worker extends Person {
 	public void setUsrName(String usrName) {
 		Worker.usrName = usrName;
 	}
+	
+	public String getName() {
+		return super.getName();
+	}
 
 	@Override
 	public boolean equals(Object x) {//equals method (Override) for worker
@@ -89,9 +93,9 @@ public class Worker extends Person {
 				System.out.println(ex);
 				scn.next();
 			}
-			System.out.print("Please enter UserName: ");
+			System.out.print("Please enter UserName(No spaces): ");
 			usrName = scn.next();
-			System.out.print("Please enter Password: ");
+			System.out.print("Please enter Password(No spaces): ");
 			pswd =scn.next();
 		}
 		Worker w = new Worker(fullName, salary);
