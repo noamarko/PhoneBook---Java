@@ -14,18 +14,20 @@ public class Main {
 			boolean flag = true;
 			int token = 0;
 			while (flag) {
-				System.out.println("Please choose your preffered action:\n");
+				System.out.println("\nPlease choose your preffered action:\n");
 				System.out.print("1. Add employee \n"
 								+ "2. Get cost by type of emplpyee \n"
-								+ "3. Search for multiple emplyee in the list\n"
-								+ "4. Cost of all bounses\n"
-								+ "5. Create Menu(Cannobe done without adding one emplyee to the system)\n"
+								+ "3. Search for duplicate emplyee in the list\n"
+								+ "4. Search emplyee\n"
+								+ "5. Print employee list\n"
+								+ "6. Create Menu\n"
+								+ "*Note: Most of the functions cannot be done without adding AT LEAST one emplyee to the system*\n"
+								+ "\n"
 								+ "Your choice: ");
 				token = scn.nextInt();
 				switch(token) {
 					case 1:{
 						listOfAll = insertIntoList(scn);
-						printList();
 						break;
 					}
 					case 2:{
@@ -33,7 +35,7 @@ public class Main {
 						if (sum == -1 || sum == 0)
 							flag = false;
 						else
-							System.out.println("Cost = " + sum);
+							System.out.println("\nCost = " + sum);
 						break;
 					}
 					case 3:{
@@ -45,28 +47,32 @@ public class Main {
 									break;
 							}
 							else {
-								System.out.println("The list contains 0 employees. Cannot compare.");
+								System.out.println("\nThe list contains 0 employees. Cannot compare.\n");
 								break;
 							}
 								
 						}
 					}
 					case 4:{
-						System.out.println("Cost of all bonuses = " + costOfAllBounses() + "\n"); // method costOfAllBonus
+						SearchWorker(scn);
 						break;
 					}
 					case 5:{
+						printList();
+						break;
+					}
+					case 6:{
 						if(listOfAll.size() > 0) 
 							logIn(scn);
 						else
-							System.out.println("The DataBase has 0 emplyees. Cannot enter Menu.\n");
+							System.out.println("\nThe DataBase has 0 emplyees. Cannot enter Menu.\n");
 						break;
 					}
 				}
 			}
 		} catch (BonusException ex) {
 			System.out.println(ex);
-			System.out.println("Program ends now...");
+			System.out.println("\nProgram ends now...");
 			return;
 		}	
 		scn.close();
@@ -74,8 +80,9 @@ public class Main {
 
 	private static void logIn(Scanner scn) throws PriceException {
 		System.out.println("*** System Log-in option ***\n");
+		scn.nextLine();
 		System.out.print("Please enter UserName: ");
-		String usrName = scn.next();
+		String usrName = scn.nextLine();
 		System.out.print("Please enter password: ");
 		String pswd = scn.next();
 		for (int i = 0; i < listOfAll.size(); i++) {
@@ -203,8 +210,17 @@ public class Main {
 
 	public static int findProduct(ArrayList<Product> p, GenericMenu<Product> pr, Scanner scn) throws PriceException {
 		double price;
-		System.out.print("Please enter name: ");
-		String name = scn.next();
+		int token;
+		String name;
+		scn.nextLine();
+		while(true) {
+			System.out.println("\nPlease enter the name: ");
+			name = scn.nextLine();
+			System.out.println("\nIs this the correct name?(1 - Y / 0 - N)");
+			token = scn.nextInt();
+			if(token == 1)
+				break;
+		}
 		System.out.print("Please enter price: ");
 		if(scn.hasNextDouble()) {
 			price = scn.nextDouble();
@@ -231,7 +247,7 @@ public class Main {
 		boolean flag = true;
 		String ans;
 		while (flag) {// using switch case to know what type of person the user wants to create
-			System.out.print("Enter [W/w], [M/m], [O/o]. [F/f] to finish: ");
+			System.out.print("\nEnter [W/w], [M/m], [O/o]. [F/f] to finish: ");
 			ans = scn.next();
 			scn.nextLine();
 			switch (ans) {
@@ -262,20 +278,24 @@ public class Main {
 	public static void printList() {// printing the list
 		System.out.println();
 		for (int i = 0; i < listOfAll.size(); i++) {
-			System.out.println(listOfAll.get(i));
+			System.out.println("\n"+listOfAll.get(i));
 		}
 	}
 	
 
-	public static int costOfAllBounses() {
+	public static void SearchWorker(Scanner scn) {
 		
-		int sum = 0;
+		String search = "";
+		System.out.print("\nPlease enter the emplyee's name: ");
+		search = scn.next();
 		for (int i = 0; i < listOfAll.size(); i++) {
-			if (listOfAll.get(i) instanceof Manager) {// checking if listOfAll[i] is from manager type
-				sum += ((Manager) listOfAll.get(i)).getBonus();
-			}
+			if (search.equals(listOfAll.get(i).getName())) // checking if listOfAll[i] is from manager type
+				System.out.println("\nFound "+listOfAll.get(i).getClass().getSimpleName()+": Name - "+listOfAll.get(i).getName()+", "
+						+ "Salary - "+listOfAll.get(i).getSalary()+", UserName -"+listOfAll.get(i).getUsrName()+"\n");
+			else
+				System.out.println("Employee not found.\n");
 		}
-		return sum;
+		
 
 	}
 	
@@ -360,7 +380,7 @@ public class Main {
 
 	private static String compareBetweenWorker(Scanner scn) {
 
-		System.out.print("Please enter the first index in the list(-1 to finish): ");
+		System.out.print("Please enter an index in the list(-1 to finish): ");
 		int index = scn.nextInt();
 		if (index == -1) {
 			return "Program ends now...";
